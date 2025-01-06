@@ -1,1 +1,19 @@
+pca_music$rotation %>% as.data.frame() %>% select(PC1:PC4) %>% rownames_to_column(var = 'Variable') %>% pivot_longer(PC1:PC4 ,names_to = 'PC', values_to = 'Value') 
 
+fviz_pca_var(pca_music, repel = TRUE)
+```
+
+```{r}
+fviz_pca_ind(pca_music, repel = TRUE)
+
+
+```{r}
+song_pca <- prcomp(song_features, scale = TRUE)
+
+# Plot the first two PCs with clusters
+library(ggplot2)
+ggplot(data = as.data.frame(song_pca$x), aes(x = PC1, y = PC2, color = as.factor(averaged_features$Cluster))) +
+  geom_point(size = 3) +
+  labs(title = "Song Clusters", x = "PC1", y = "PC2", color = "Cluster")
+
+```
